@@ -15,3 +15,4 @@ class AccountListCreateView(generics.ListCreateAPIView):
 class AccountDetailsView(generics.RetrieveDestroyAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    lookup_field = 'user_id'

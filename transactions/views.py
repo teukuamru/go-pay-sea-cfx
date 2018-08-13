@@ -17,7 +17,7 @@ class TransactionHistoryListCreateView(generics.ListCreateAPIView):
         return response
 
     def change_account_balance(self, data):
-        account = Account.objects.get(user_id=data['user'])
+        account = Account.objects.get(user_id=data['account'])
 
         old_balance = account.go_pay_balance
         new_balance = old_balance + data['changed_balance']
@@ -45,7 +45,7 @@ class TransactionHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def restore_account_balance(self, instance):
-        account = Account.objects.get(user_id=str(instance.user))
+        account = Account.objects.get(user_id=str(instance.account))
 
         old_balance = account.go_pay_balance
         new_balance = old_balance - instance.changed_balance

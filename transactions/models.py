@@ -3,7 +3,8 @@ from accounts.models import Account
 
 
 class TransactionHistory(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, to_field='user_id',
+                             on_delete=models.CASCADE)
     changed_balance = models.IntegerField()
     description = models.TextField()
     finished = models.BooleanField(default=False)

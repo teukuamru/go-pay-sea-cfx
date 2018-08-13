@@ -12,4 +12,4 @@ class TransactionHistoryPutSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionHistory
         fields = '__all__'
-        read_only_fields = ('user', 'changed_balance', 'description')
+        read_only_fields = ('account', 'changed_balance', 'description')
