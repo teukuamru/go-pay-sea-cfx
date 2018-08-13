@@ -6,7 +6,7 @@ from .views import AccountListCreateView, AccountDetailsView
 urlpatterns = [
     path('', AccountListCreateView.as_view(),
          name='account_list_create'),
-    path('<int:user_id>/', AccountDetailsView.as_view(),
+    path('<str:user_id>/', AccountDetailsView.as_view(),
          name='account_details')
 ]
 

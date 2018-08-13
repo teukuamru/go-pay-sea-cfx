@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from accounts.serializers import AccountSerializer
 from .models import TransactionHistory
 
 
@@ -8,8 +10,15 @@ class TransactionHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TransactionHistoryPutSerializer(serializers.ModelSerializer):
+class TransactionFinalizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionHistory
         fields = '__all__'
         read_only_fields = ('account', 'changed_balance', 'description')
+
+
+class TopUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransactionHistory
+        fields = '__all__'
+        read_only_fields = ('account', 'finished',)
