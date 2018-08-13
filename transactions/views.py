@@ -2,7 +2,8 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 
 from accounts.models import Account
-from .serializers import TransactionHistorySerializer
+from .serializers import TransactionHistorySerializer, \
+                         TransactionHistoryPutSerializer
 from .models import TransactionHistory
 
 
@@ -29,11 +30,14 @@ class TransactionHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TransactionHistory.objects.all()
     serializer_class = TransactionHistorySerializer
 
-    def update(self, request, *args, **kwargs):
-        response = super().update(request, *args, **kwargs)
-        print(response.data)
-        return response
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
 
+        if self.request.method == 'PUT':
+            serializer_class = TransactionHistoryPutSerializer
+
+        return serializer_class
+    
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.restore_account_balance(instance)

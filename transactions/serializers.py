@@ -5,5 +5,11 @@ from .models import TransactionHistory
 class TransactionHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionHistory
-        fields = ('id', 'user', 'changed_balance',
-                  'description', 'finished')
+        fields = '__all__'
+
+
+class TransactionHistoryPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransactionHistory
+        fields = '__all__'
+        read_only_fields = ('user', 'changed_balance', 'description')

@@ -5,5 +5,5 @@ from .models import Account
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('user_id', 'go_pay_balance')
+        fields = '__all__'
         read_only_fields = ('go_pay_balance', )

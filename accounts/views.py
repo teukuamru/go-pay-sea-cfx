@@ -1,4 +1,5 @@
 from rest_framework import generics
+
 from .serializers import AccountSerializer
 from .models import Account
 
@@ -11,6 +12,6 @@ class AccountListCreateView(generics.ListCreateAPIView):
         serializer.save()
 
 
-class AccountDetailsView(generics.RetrieveUpdateDestroyAPIView):
+class AccountDetailsView(generics.RetrieveDestroyAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
