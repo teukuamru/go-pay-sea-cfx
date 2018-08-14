@@ -1,0 +1,1 @@
+web: gunicorn go_pay.wsgi --log-file -
