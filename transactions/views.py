@@ -74,7 +74,7 @@ class TopUpCreateView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
-        # change_account_balance(response.data)
+        change_account_balance(response.data)
         return response
 
     def perform_create(self, serializer):
