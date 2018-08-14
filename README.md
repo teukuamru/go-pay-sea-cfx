@@ -1,4 +1,4 @@
-### API List
+### Account API List
 * List of accounts:
     * GET http://localhost:8000/api/account/
 * Create new account:
@@ -8,6 +8,7 @@
 * Delete account info:
     * DELETE http://localhost:8000/api/account/10/
 
+### Transaction API List
 * List of all transactions:
     * GET http://localhost:8000/api/transaction/
 * Create new transaction:
