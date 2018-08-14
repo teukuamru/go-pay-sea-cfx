@@ -11,6 +11,8 @@ django-cors-headers = "*"
 gunicorn = "*"
 python-decouple = "*"
 dj-database-url = "*"
+django-heroku = "*"
+whitenoise = "*"
 
 [dev-packages]
 "pep8" = "*"
