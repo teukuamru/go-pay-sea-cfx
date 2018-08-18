@@ -168,4 +168,4 @@ django_heroku.settings(locals())
 #     os.path.join(BASE_DIR, 'static'),
 # )
 
-APPEND_SLASH = False
+# APPEND_SLASH = False
