@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 
 from .serializers import BalanceSerializer, UserSerializer
@@ -21,6 +21,16 @@ class UserDetailsView(generics.RetrieveDestroyAPIView):
 class BalanceCreateView(generics.CreateAPIView):
     queryset = Balance.objects.all()
     serializer_class = BalanceSerializer
+
+    def perform_create(self, serializer):
+        self.change_serializer_data(serializer)
+        serializer.save()
+
+    def change_serializer_data(self, serializer):
+        username = self.kwargs['username']
+        user = get_object_or_404(CustomUser, username=username)
+
+        serializer.validated_data['user'] = user
 
 
 class BalanceDetailsView(generics.RetrieveAPIView):

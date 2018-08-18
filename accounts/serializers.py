@@ -12,4 +12,4 @@ class BalanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Balance
         fields = '__all__'
-        # read_only_fields = ('go_pay_balance', )
+        read_only_fields = ('go_pay_balance', 'user')

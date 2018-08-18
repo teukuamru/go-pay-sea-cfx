@@ -7,8 +7,8 @@ from .views import TransactionHistoryListCreateView, \
 
 
 urlpatterns = [
-    # path('', TransactionHistoryListCreateView.as_view(),
-    #      name='transaction_history_list_create'),
+    path('', TransactionHistoryListCreateView.as_view(),
+         name='transaction_history_list_create'),
     path('<int:pk>/', TransactionHistoryDetailsView.as_view(),
          name='transaction_history_details'),
     path('all/<str:username>/',
