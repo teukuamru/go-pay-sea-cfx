@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from accounts.models import Balance, CustomUser
 from .serializers import TransactionHistorySerializer, \
                          TransactionFinalizeSerializer, \
-                         TopUpSerializer
+                         TopUpSerializer, TransactionHistoryDetailsSerializer
 from .models import TransactionHistory
 
 
@@ -58,13 +58,13 @@ class TransactionHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def refund_account_balance(self, instance):
-        account = Balance.objects.get(user_id=str(instance.account))
+        user_balance = Balance.objects.get(user=instance.user)
 
-        old_balance = account.go_pay_balance
+        old_balance = user_balance.go_pay_balance
         new_balance = old_balance - instance.changed_balance
-        account.go_pay_balance = new_balance
+        user_balance.go_pay_balance = new_balance
 
-        account.save()
+        user_balance.save()
 
 
 class TopUpCreateView(generics.CreateAPIView):
