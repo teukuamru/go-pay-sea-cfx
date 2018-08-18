@@ -71,7 +71,9 @@ Example Response Body:
 
 ```json
 {
-    "key": "e4a218f4ea58b269762981694844521889d545c7"
+    "key": "e4a218f4ea58b269762981694844521889d545c7",
+    "id": 1,
+    "username": "compfest"
 }
 ```
 
