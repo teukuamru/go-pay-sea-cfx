@@ -13,9 +13,11 @@ python-decouple = "*"
 dj-database-url = "*"
 django-heroku = "*"
 whitenoise = "*"
+django-rest-auth = {version = "*", extras = ["with_social"]}
 
 [dev-packages]
 "pep8" = "*"
+rope = "*"
 
 [requires]
 python_version = "3.6"

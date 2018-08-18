@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from accounts.models import Account
+from accounts.models import Balance
 from .serializers import TransactionHistorySerializer, \
                          TransactionFinalizeSerializer, \
                          TopUpSerializer
@@ -10,7 +10,7 @@ from .models import TransactionHistory
 
 
 def change_account_balance(data):
-    account = Account.objects.get(user_id=data['account'])
+    account = Balance.objects.get(user_id=data['account'])
 
     old_balance = account.go_pay_balance
     new_balance = old_balance + data['changed_balance']
@@ -58,7 +58,7 @@ class TransactionHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def refund_account_balance(self, instance):
-        account = Account.objects.get(user_id=str(instance.account))
+        account = Balance.objects.get(user_id=str(instance.account))
 
         old_balance = account.go_pay_balance
         new_balance = old_balance - instance.changed_balance
@@ -83,7 +83,7 @@ class TopUpCreateView(generics.CreateAPIView):
 
     def change_serializer_data(self, serializer):
         user_id = self.kwargs.get(self.lookup_url_kwarg)
-        account = get_object_or_404(Account, user_id=user_id)
+        account = get_object_or_404(Balance, user_id=user_id)
         serializer.validated_data['account'] = account
         self.process_top_up_transaction(serializer)
 

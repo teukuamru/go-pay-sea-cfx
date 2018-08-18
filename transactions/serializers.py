@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from accounts.serializers import AccountSerializer
 from .models import TransactionHistory
 
 
