@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'accounts',
+    'transactions',
+
     'rest_framework',
     'rest_framework.authtoken',
 
@@ -52,9 +55,6 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 
     'corsheaders',
-
-    'accounts',
-    'transactions',
 ]
 
 SITE_ID = 1
