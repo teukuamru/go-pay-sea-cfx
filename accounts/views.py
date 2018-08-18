@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -24,15 +26,10 @@ class BalanceCreateView(generics.CreateAPIView):
 class BalanceDetailsView(generics.RetrieveAPIView):
     serializer_class = BalanceSerializer
 
-    def get_queryset(self):
+    def get_object(self):
         username = self.kwargs['username']
-        print(username)
 
-        return Balance.objects.filter(user__username=username)
+        obj = get_object_or_404(Balance, user__username=username)
+        self.check_object_permissions(self.request, obj)
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        serializer.data.user = CustomUser.objects.get(id=1).username
-
-        return Response(serializer.data)
+        return obj

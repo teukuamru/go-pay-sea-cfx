@@ -10,9 +10,9 @@ urlpatterns = [
     path('<str:username>/', UserDetailsView.as_view(),
          name='account_details'),
 
-    path('<str:username>/balance/create', BalanceCreateView.as_view(),
+    path('<str:username>/balance/create/', BalanceCreateView.as_view(),
          name='balance_create'),
-    path('<str:username>/balance', BalanceDetailsView.as_view(),
+    path('<str:username>/balance/', BalanceDetailsView.as_view(),
          name='balance_details'),
 ]
 

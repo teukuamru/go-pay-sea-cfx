@@ -7,14 +7,14 @@ from .views import TransactionHistoryListCreateView, \
 
 
 urlpatterns = [
-    path('', TransactionHistoryListCreateView.as_view(),
-         name='transaction_history_list_create'),
+    # path('', TransactionHistoryListCreateView.as_view(),
+    #      name='transaction_history_list_create'),
     path('<int:pk>/', TransactionHistoryDetailsView.as_view(),
          name='transaction_history_details'),
-    path('all/<str:user_id>/',
+    path('all/<str:username>/',
          TransactionHistoryListByUserView.as_view(),
          name='transaction_history_list_by_user'),
-    path('top-up/<str:user_id>', TopUpCreateView.as_view(),
+    path('top-up/<str:username>/', TopUpCreateView.as_view(),
          name='top_up_create'),
 ]
 

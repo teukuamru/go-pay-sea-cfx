@@ -10,13 +10,13 @@ from .models import TransactionHistory
 
 
 def change_account_balance(data):
-    account = Balance.objects.get(user_id=data['account'])
+    balance = Balance.objects.get(user=data['user_balance'])
 
-    old_balance = account.go_pay_balance
+    old_balance = balance.go_pay_balance
     new_balance = old_balance + data['changed_balance']
-    account.go_pay_balance = new_balance
+    balance.go_pay_balance = new_balance
 
-    account.save()
+    balance.save()
 
 
 class TransactionHistoryListCreateView(generics.ListCreateAPIView):
@@ -31,11 +31,12 @@ class TransactionHistoryListCreateView(generics.ListCreateAPIView):
 
 class TransactionHistoryListByUserView(generics.ListAPIView):
     serializer_class = TransactionHistorySerializer
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = 'username'
 
     def get_queryset(self):
-        user_id = self.kwargs.get(self.lookup_url_kwarg)
-        queryset = TransactionHistory.objects.filter(account=user_id)
+        username = self.kwargs.get(self.lookup_url_kwarg)
+        queryset = TransactionHistory.objects.filter(
+            user_balance__user__username=username)
         return queryset
 
 
@@ -70,11 +71,15 @@ class TransactionHistoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
 class TopUpCreateView(generics.CreateAPIView):
     queryset = TransactionHistory.objects.all()
     serializer_class = TopUpSerializer
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = 'username'
 
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         change_account_balance(response.data)
+
+        user_balance = response.data['user_balance']
+        response.data['user_balance'] = user_balance.username
+
         return response
 
     def perform_create(self, serializer):
@@ -82,9 +87,11 @@ class TopUpCreateView(generics.CreateAPIView):
         serializer.save()
 
     def change_serializer_data(self, serializer):
-        user_id = self.kwargs.get(self.lookup_url_kwarg)
-        account = get_object_or_404(Balance, user_id=user_id)
-        serializer.validated_data['account'] = account
+        username = self.kwargs.get(self.lookup_url_kwarg)
+        user_balance = get_object_or_404(Balance, user__username=username)
+
+        serializer.validated_data['user_balance'] = user_balance
+
         self.process_top_up_transaction(serializer)
 
     def process_top_up_transaction(self, serializer):

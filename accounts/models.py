@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
 
 
 class Balance(models.Model):
-    user = models.OneToOneField(CustomUser, 
+    user = models.OneToOneField(CustomUser, to_field='username',
                                 on_delete=models.CASCADE)
     go_pay_balance = models.IntegerField(default=0)
 
